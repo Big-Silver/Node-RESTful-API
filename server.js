@@ -18,7 +18,7 @@ var port     = process.env.PORT || 8080; // set our port
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/myDatabase'); // connect to our database
-var Bear     = require('./app/models/bear');
+var Model     = require('./app/models/model');
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -38,74 +38,74 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });	
 });
 
-// on routes that end in /bears
+// on routes that end in /models
 // ----------------------------------------------------
-router.route('/bears')
+router.route('/models')
 
-	// create a bear (accessed at POST http://localhost:8080/bears)
+	// create a model (accessed at POST http://localhost:8080/models)
 	.post(function(req, res) {
 		
-		var bear = new Bear();		// create a new instance of the Bear model
-		bear.name = req.body.name;  // set the bears name (comes from the request)
-		bear.age = req.body.age;
+		var model = new Model();		// create a new instance of the Model model
+		model.name = req.body.name;  // set the models name (comes from the request)
+		model.age = req.body.age;
 
-		bear.save(function(err) {
+		model.save(function(err) {
 			if (err)
 				res.send(err);
 
-			res.json({ message: 'Bear created!' });
+			res.json({ message: 'Model created!' });
 		});
 
 		
 	})
 
-	// get all the bears (accessed at GET http://localhost:8080/api/bears)
+	// get all the models (accessed at GET http://localhost:8080/api/models)
 	.get(function(req, res) {
-		Bear.find(function(err, bears) {
+		Model.find(function(err, models) {
 			if (err)
 				res.send(err);
 
-			res.json(bears);
+			res.json(models);
 		});
 	});
 
-// on routes that end in /bears/:bear_id
+// on routes that end in /models/:model_id
 // ----------------------------------------------------
-router.route('/bears/:bear_id')
+router.route('/models/:model_id')
 
-	// get the bear with that id
+	// get the model with that id
 	.get(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+		Model.findById(req.params.model_id, function(err, model) {
 			if (err)
 				res.send(err);
-			res.json(bear);
+			res.json(model);
 		});
 	})
 
-	// update the bear with this id
+	// update the model with this id
 	.put(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+		Model.findById(req.params.model_id, function(err, model) {
 
 			if (err)
 				res.send(err);
 
-			bear.name = req.body.name;
-			bear.age = req.body.age;
-			bear.save(function(err) {
+			model.name = req.body.name;
+			model.age = req.body.age;
+			model.save(function(err) {
 				if (err)
 					res.send(err);
 
-				res.json({ message: 'Bear updated!' });
+				res.json({ message: 'Model updated!' });
 			});
 
 		});
 	})
 
-	// delete the bear with this id
+	// delete the model with this id
 	.delete(function(req, res) {
-		Bear.remove({
-			_id: req.params.bear_id
-		}, function(err, bear) {
+		Model.remove({
+			_id: req.params.model_id
+		}, function(err, model) {
 			if (err)
 				res.send(err);
 
