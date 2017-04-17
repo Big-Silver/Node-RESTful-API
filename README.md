@@ -4,7 +4,7 @@
 
 ## About
 
-Using the new Express 4.0 Router to build an API
+Using the new Express 4.0 Router to build an API.
 This project is written by [Big Silver].
 
 ## Requirements
